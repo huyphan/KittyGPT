@@ -2,7 +2,7 @@
 //  KittyGPTApp.swift
 //  KittyGPT
 //
-//  Created by Phan, Harry on 5/17/23.
+//  Created by huyphan on 5/27/23.
 //
 
 import SwiftUI
@@ -29,6 +29,9 @@ struct KittyGPTApp: App {
                     shouldFocusPromptTemplateList.toggle()
                 }.keyboardShortcut("f", modifiers: .command)
             }
+        }
+        Settings {
+          PreferencesView()
         }
     }
 }

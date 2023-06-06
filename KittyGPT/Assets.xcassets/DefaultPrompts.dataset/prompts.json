@@ -1,0 +1,106 @@
+{
+  "groups": [
+    {
+      "id": "writing",
+      "name": "Writing",
+      "prompts": [
+        {
+          "id": "improve-writing",
+          "name": "Make it read better",
+          "description": "Improve this sentence or paragraph",
+          "template": "Rewrite the following sentence(s) of paragraph(s) in a better way:\n\n{content}",
+          "fields": [
+            {
+              "id": "content",
+              "name": "content",
+              "type": "multiple-lines"
+            }
+          ]
+        },
+       {
+          "id": "concise-writing",
+          "name": "Make it more concise",
+          "description": "Make the writing more concise",
+          "template": "Rewrite the following sentence(s) of paragraph(s) so it's more concise:\n\n{content}",
+          "fields": [
+            {
+              "id": "content",
+              "name": "content",
+              "type": "multiple-lines"
+            }
+          ]
+        },
+        {
+          "id": "thesaurus",
+          "name": "Alternative phrases",
+          "description": "Alternative words or phrases",
+          "template": "What are the alternative words or phrases for \"{content}\"?",
+          "fields": [
+            {
+              "id": "content",
+              "name": "content",
+              "type": "single-line"
+            }
+          ]
+        },
+        {
+          "id": "grammar-checker",
+          "name": "Grammar and spelling checker",
+          "description": "Grammar and spelling checker",
+          "template": "Check for grammar and spelling error in the following sentence or paragraph:\n\n{content}",
+          "fields": [
+            {
+              "id": "content",
+              "name": "content",
+              "type": "multiple-lines"
+            }
+          ]
+        },
+      ]
+    },
+    {
+      "id": "coding",
+      "name": "Coding",
+      "prompts": [
+        {
+          "id": "code-snippet",
+          "name": "Suggesting code snippet",
+          "description": "Suggesting code snippet",
+          "template": "write the code that does the followings in {context}: \n\n {purpose}",
+          "fields": [
+            {
+              "id": "context",
+              "name": "context",
+              "type": "single-line",
+              "persistent": true
+            },
+            {
+              "id": "purpose",
+              "name": "purpose",
+              "type": "multiple-lines"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "name": "Misc",
+      "prompts": [
+        {
+          "id": "free-form",
+          "name": "Free-form question",
+          "description": "Free-form question",
+          "template": "{content}",
+          "fields": [
+            {
+              "id": "content",
+              "name": "content",
+              "type": "multiple-lines"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

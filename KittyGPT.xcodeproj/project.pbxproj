@@ -13,7 +13,6 @@
 		2A6702742A14C11200AE09DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A6702732A14C11200AE09DC /* Assets.xcassets */; };
 		2A6702772A14C11200AE09DC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A6702762A14C11200AE09DC /* Preview Assets.xcassets */; };
 		2A67027F2A14CB7B00AE09DC /* NavigationManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A67027E2A14CB7B00AE09DC /* NavigationManagerView.swift */; };
-		2A6702812A17B75700AE09DC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6702802A17B75700AE09DC /* Constants.swift */; };
 		2A6702852A17B7FB00AE09DC /* OpenAICompletionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6702842A17B7FB00AE09DC /* OpenAICompletionsModel.swift */; };
 		2A6702872A17B82A00AE09DC /* OpenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6702862A17B82A00AE09DC /* OpenAIService.swift */; };
 		2A6702892A196A2100AE09DC /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6702882A196A2000AE09DC /* MessageView.swift */; };
@@ -21,6 +20,7 @@
 		2A6702EF2A1A4EB900AE09DC /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6702EE2A1A4EB900AE09DC /* PersistenceController.swift */; };
 		2A6E2DC52A24A15600921DBB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2A6E2DC42A24A15600921DBB /* Alamofire */; };
 		2A6E2DC82A24A3B800921DBB /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 2A6E2DC72A24A3B800921DBB /* AlertToast */; };
+		2AF2011D2A2F407000D6B88E /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF2011C2A2F407000D6B88E /* PreferencesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,18 +39,18 @@
 /* Begin PBXFileReference section */
 		2A257E042A1C7684009C9C13 /* PromptEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptEditor.swift; sourceTree = "<group>"; };
 		2A257E0E2A1C77C7009C9C13 /* PromptConfigurationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptConfigurationModel.swift; sourceTree = "<group>"; };
-		2A67026C2A14C10E00AE09DC /* KittyGPT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KittyGPT.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A67026C2A14C10E00AE09DC /* KittyGPT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KittyGPT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A67026F2A14C10E00AE09DC /* KittyGPTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KittyGPTApp.swift; sourceTree = "<group>"; };
 		2A6702732A14C11200AE09DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A6702762A14C11200AE09DC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2A6702782A14C11200AE09DC /* KittyGPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KittyGPT.entitlements; sourceTree = "<group>"; };
 		2A67027E2A14CB7B00AE09DC /* NavigationManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManagerView.swift; sourceTree = "<group>"; };
-		2A6702802A17B75700AE09DC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2A6702842A17B7FB00AE09DC /* OpenAICompletionsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAICompletionsModel.swift; sourceTree = "<group>"; };
 		2A6702862A17B82A00AE09DC /* OpenAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIService.swift; sourceTree = "<group>"; };
 		2A6702882A196A2000AE09DC /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		2A6702EB2A1A4E3600AE09DC /* KittyGPT.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = KittyGPT.xcdatamodel; sourceTree = "<group>"; };
 		2A6702EE2A1A4EB900AE09DC /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		2AF2011C2A2F407000D6B88E /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,9 +94,8 @@
 				2A6702732A14C11200AE09DC /* Assets.xcassets */,
 				2A6702782A14C11200AE09DC /* KittyGPT.entitlements */,
 				2A6702752A14C11200AE09DC /* Preview Content */,
-				2A6702802A17B75700AE09DC /* Constants.swift */,
 			);
-			path = "KittyGPT";
+			path = KittyGPT;
 			sourceTree = "<group>";
 		};
 		2A6702752A14C11200AE09DC /* Preview Content */ = {
@@ -120,6 +119,7 @@
 				2A257E042A1C7684009C9C13 /* PromptEditor.swift */,
 				2A6702882A196A2000AE09DC /* MessageView.swift */,
 				2A67027E2A14CB7B00AE09DC /* NavigationManagerView.swift */,
+				2AF2011C2A2F407000D6B88E /* PreferencesView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -158,12 +158,12 @@
 			);
 			dependencies = (
 			);
-			name = "KittyGPT";
+			name = KittyGPT;
 			packageProductDependencies = (
 				2A6E2DC42A24A15600921DBB /* Alamofire */,
 				2A6E2DC72A24A3B800921DBB /* AlertToast */,
 			);
-			productName = "KittyGPT";
+			productName = KittyGPT;
 			productReference = 2A67026C2A14C10E00AE09DC /* KittyGPT.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -229,8 +229,8 @@
 				2A257E052A1C7684009C9C13 /* PromptEditor.swift in Sources */,
 				2A257E0F2A1C77C7009C9C13 /* PromptConfigurationModel.swift in Sources */,
 				2A6702702A14C10E00AE09DC /* KittyGPTApp.swift in Sources */,
-				2A6702812A17B75700AE09DC /* Constants.swift in Sources */,
 				2A6702892A196A2100AE09DC /* MessageView.swift in Sources */,
+				2AF2011D2A2F407000D6B88E /* PreferencesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,7 +357,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = "KittyGPT/KittyGPT.entitlements";
+				CODE_SIGN_ENTITLEMENTS = KittyGPT/KittyGPT.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -372,8 +373,9 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.zepvn.KittyGPT";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zepvn.KittyGPT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -387,7 +389,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = "KittyGPT/KittyGPT.entitlements";
+				CODE_SIGN_ENTITLEMENTS = KittyGPT/KittyGPT.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -402,8 +405,9 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.zepvn.KittyGPT";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zepvn.KittyGPT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

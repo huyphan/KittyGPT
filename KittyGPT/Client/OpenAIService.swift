@@ -9,8 +9,10 @@ class OpenAIService {
     func sendMessage(message: String) -> AnyPublisher<OpenAIResponse, Error> {
         let body = OpenAICompletionsBody(model: "text-davinci-003", prompt: message, temperature: 0.6, max_tokens: 256)
         
+        let apiKey = UserDefaults.standard.string(forKey: "openAiApiKey")
+        
         let headers: HTTPHeaders = [
-            "Authorization" : "Bearer \(Constants.OpenAIAPIKey)"
+            "Authorization" : "Bearer \(apiKey ?? "")"
         ]
         
         return Future { [weak self] promise in

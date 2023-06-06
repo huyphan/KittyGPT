@@ -2,7 +2,7 @@
 //  NavigationManagerView.swift
 //  KittyGPT
 //
-//  Created by Phan, Harry on 5/17/23.
+//  Created by huyphan on 5/27/23.
 //
 
 import SwiftUI
@@ -19,13 +19,29 @@ enum SideBarItem: String, Identifiable, CaseIterable {
     case dynamicPrompt = "Test - Dynamic prompt"
 }
 
+func saveDefaultPromptTemplate(fileURL: URL) {
+    guard let asset = NSDataAsset(name: "DefaultPrompts") else {
+        fatalError("Missing data asset: DefaultPrompts")
+    }
+
+    let data = asset.data
+    do {
+        try data.write(to: fileURL)
+    } catch {
+        fatalError("Couldn't save the default prompts to disk")
+    }
+}
+
 func loadPromptConfigurations<T: Decodable>() -> T {
     
     let fileManager = FileManager.default
     let supportDirectory = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
     
     var data: String = ""
-    let fileURL = supportDirectory?.appendingPathComponent("model.json")
+    let fileURL = supportDirectory?.appendingPathComponent("prompts.json")
+    if (!FileManager.default.fileExists(atPath: fileURL!.absoluteString)) {
+        saveDefaultPromptTemplate(fileURL: fileURL!)
+    }
     print("Reading the file \(fileURL)")
     do {
         data = try String(contentsOf: fileURL!)
@@ -134,16 +150,36 @@ struct NavigationmanagerView: View {
                 }
                 .padding(.bottom, 30)
                 Spacer()
+                
+                if (selectedPrompt == nil) {
+                    Text("Choose a prompt template from the sidebar to start")
+                        .font(.system(size: 20))
+                        .foregroundColor(.gray)
+                }
+                
                 PromptEditor(prompt: selectedPrompt, shouldSendMessage: $shouldSendMessage)
+                
                 HStack {
                     Spacer()
                     
                     Button(action: {
+                        if #available(macOS 13, *) {
+                            NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                        } else {
+                            NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                        }
+                    }) {
+                        Text("Settings")
+                    }
+                    .controlSize(.large)
+                    .padding(0)
+                    
+                    Button(action: {
                         let supportDirectory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
-                        let fileURL = supportDirectory!.appendingPathComponent("model.json")
+                        let fileURL = supportDirectory!.appendingPathComponent("prompts.json")
                         NSWorkspace.shared.activateFileViewerSelecting([fileURL])
                     }) {
-                        Text("Locate configuration file")
+                        Text("Locate template file")
                     }
                     .controlSize(.large)
                     .padding(0)
@@ -178,6 +214,12 @@ struct NavigationmanagerView: View {
                     .keyboardShortcut(.return, modifiers: .command)
                     .controlSize(.large)
                     .padding(0)
+                }
+                
+                HStack {
+                    Spacer()
+                    Text("Shorcut: Cmd-Enter to send message. Cmd-F to navigate the prompt templates")
+                        .italic()
                 }
             }
             .padding()

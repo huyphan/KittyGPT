@@ -108,28 +108,33 @@ struct PromptEditor: View {
             return
         }
         let message = self.buildMessage()
+
+        // Save the question
         let myMessage = ChatMessage(context: viewContext)
         myMessage.id = UUID().uuidString
         myMessage.content = message.trimmingCharacters(in: .whitespacesAndNewlines)
         myMessage.createdAt = Date()
         myMessage.sender = "me"
+
         do {
             try viewContext.save()
         } catch {
             print("Error when saving message")
         }
-
+        
         isLoading = true
         openAIService.sendMessage(message: message).sink { completion in
             switch completion {
             case .failure(_):
                 showErrorAlert = true
-                errorMessage = "Failed to send prompt to OpenAI"
+                errorMessage = "Failed to send prompt to OpenAI. Check your API Key in Settings."
             case .finished: print("Received response")
             }
             isLoading = false
         } receiveValue: { response in
             guard let textResponse = response.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines.union(.init(charactersIn: "\""))) else {return}
+            
+            // Save the answer
             let chatGPTMessage = ChatMessage(context: viewContext)
             chatGPTMessage.id = response.id
             chatGPTMessage.content = textResponse

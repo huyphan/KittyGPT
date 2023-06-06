@@ -2,7 +2,7 @@
 //  PromptConfigurationModel.swift
 //  KittyGPT
 //
-//  Created by Phan, Harry on 5/23/23.
+//  Created by huyphan on 5/27/23.
 //
 
 import Foundation

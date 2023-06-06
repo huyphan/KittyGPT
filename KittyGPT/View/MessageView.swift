@@ -21,7 +21,7 @@ struct MessageView: View {
                 .background(message.sender == "me" ? .blue : Color(red: 57/256, green: 62/256, blue: 64/256))
                 .cornerRadius(10)
                 .textSelection(.enabled)
-                .font(.custom("SF Mono", size: 13))
+                .font(.custom("Menlo", size: 13))
                 .lineSpacing(8)
             if message.sender == "chatGPT" {
                 VStack {
