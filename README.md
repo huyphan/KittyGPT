@@ -9,6 +9,14 @@ the [OpenAI API Keys](https://platform.openai.com/account/api-keys) page.
 Please note that while this application is open-source and free to use, the usage of the OpenAI API is not free. Ensure 
 you are aware of the associated costs before using the application extensively.
 
+## Why I created this project
+
+I needed to streamline my ChatGPT workflow, but I encountered several limitations with existing tools available in 
+the market. They were either overly expensive, web-based (making me hesitant to trust them with my API key), or lacking 
+the specific features I required. As a personal weekend challenge, I embarked on creating this project to learn SwiftUI 
+and see how far I could go. The code was written with significant guidance and assistance from ChatGPT itself.
+
+
 ## Requirements
 
 * macOS 13.0 (Ventura) or above.
