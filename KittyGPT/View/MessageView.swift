@@ -6,7 +6,7 @@ struct MessageView: View {
     var message: ChatMessage
     
     @State var showToast: Bool = false
-    
+
     var body: some View {
         HStack {
             if message.sender == "me" {
@@ -46,7 +46,7 @@ struct MessageView: View {
 
                     }
                     .toast(isPresenting: $showToast){
-                        AlertToast(displayMode: .banner(.slide), type: .regular, title: "Copied to cliboard")
+                        AlertToast(displayMode: .banner(.slide), type: .complete(Color.primary), title: "Copied to cliboard")
                     }
                 }
                 

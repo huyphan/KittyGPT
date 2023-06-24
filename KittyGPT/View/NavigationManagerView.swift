@@ -23,7 +23,7 @@ func saveDefaultPromptTemplate(fileURL: URL) {
     guard let asset = NSDataAsset(name: "DefaultPrompts") else {
         fatalError("Missing data asset: DefaultPrompts")
     }
-
+    
     let data = asset.data
     do {
         try data.write(to: fileURL)
@@ -71,12 +71,12 @@ struct NavigationmanagerView: View {
     
     private var promptConfigurations: PromptConfigurations = loadPromptConfigurations()
     private var prompts: [String: Prompt] = [:]
-
+    
     @FocusState private var isPromptTemplateListFocused: Bool
     @Binding var shouldFocusPromptTemplateList: Bool
     
     @Environment(\.managedObjectContext) private var viewContext
-
+    
     
     init(shouldFocusPromptTemplateList: Binding<Bool>) {
         request = ChatMessage.fetchRequest()
@@ -87,17 +87,23 @@ struct NavigationmanagerView: View {
         request.fetchLimit = 20
         _messages = FetchRequest(fetchRequest: request)
         _shouldFocusPromptTemplateList = shouldFocusPromptTemplateList
-
+        
         for group in promptConfigurations.groups {
             for prompt in group.prompts {
                 prompts[prompt.id] = prompt
             }
         }
     }
-
+    
     var selectedPrompt: Prompt? {
         return prompts[selectedSideBarItem]
     }
+    
+    func placeOrder() { }
+    func adjustOrder() { }
+    func rename() { }
+    func delay() { }
+    func cancelOrder() { }
     
     var body: some View {
         NavigationSplitView(columnVisibility: $sideBarVisibility) {
@@ -126,105 +132,98 @@ struct NavigationmanagerView: View {
                 }
                 .focused($isPromptTemplateListFocused)
                 
-                
                 Spacer()
-                
+                Divider()
+                HStack {
+                    Spacer()
+                    Menu {
+                        Button("Settings") {
+                            if #available(macOS 13, *) {
+                                NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                            } else {
+                                NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                            }
+                        }
+                        Button("Locate template file") {
+                            let supportDirectory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+                            let fileURL = supportDirectory!.appendingPathComponent("prompts.json")
+                            NSWorkspace.shared.activateFileViewerSelecting([fileURL])
+                        }
+                        Button("Clear history") {
+                            // This code should be moved to PersistenceController
+                            let fetchRequest: NSFetchRequest<NSFetchRequestResult> = ChatMessage.fetchRequest()
+                            
+                            let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+                            
+                            do {
+                                try viewContext.execute(batchDeleteRequest)
+                                try viewContext.save()
+                                viewContext.reset()
+                            } catch {
+                                // Handle error
+                                print("Error deleting data: \(error)")
+                            }
+                            refreshID = UUID()
+                        }
+                    } label: {
+                        Image(systemName: "gearshape.fill")
+                    }
+                    .menuStyle(BorderlessButtonMenuStyle())
+                    .menuIndicator(.hidden)
+                    .fixedSize()
+                    .padding(.bottom, 8)
+                }
             }.focusSection()
         }
-        detail: {
-            VStack {
-                // Message list
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        ForEach(self.messages.reversed(), id: \.self) { item in
-                            MessageView(message: item).id(item.id)
-                        }
-                        .id(refreshID)
+    detail: {
+        VStack {
+            // Message list
+            ScrollViewReader { proxy in
+                ScrollView {
+                    ForEach(self.messages.reversed(), id: \.self) { item in
+                        MessageView(message: item).id(item.id)
                     }
-                    .onChange(of: messages.first?.id) { _ in
-                        proxy.scrollTo(messages.first?.id, anchor: .bottom)
-                    }
-                    .onAppear(perform: {
-                        proxy.scrollTo(messages.first?.id, anchor: .bottom)
-                    })
+                    .id(refreshID)
                 }
-                .padding(.bottom, 30)
-                Spacer()
-                
-                if (selectedPrompt == nil) {
-                    Text("Choose a prompt template from the sidebar to start")
-                        .font(.system(size: 20))
-                        .foregroundColor(.gray)
+                .onChange(of: messages.first?.id) { _ in
+                    proxy.scrollTo(messages.first?.id, anchor: .bottom)
                 }
-                
-                PromptEditor(prompt: selectedPrompt, shouldSendMessage: $shouldSendMessage)
-                
-                HStack {
-                    Spacer()
-                    
-                    Button(action: {
-                        if #available(macOS 13, *) {
-                            NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-                        } else {
-                            NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
-                        }
-                    }) {
-                        Text("Settings")
-                    }
-                    .controlSize(.large)
-                    .padding(0)
-                    
-                    Button(action: {
-                        let supportDirectory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
-                        let fileURL = supportDirectory!.appendingPathComponent("prompts.json")
-                        NSWorkspace.shared.activateFileViewerSelecting([fileURL])
-                    }) {
-                        Text("Locate template file")
-                    }
-                    .controlSize(.large)
-                    .padding(0)
-                    
-                    Button(action: {
-                        // This code should be moved to PersistenceController
-                        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = ChatMessage.fetchRequest()
-                        
-                        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-                        
-                        do {
-                            try viewContext.execute(batchDeleteRequest)
-                            try viewContext.save()
-                            viewContext.reset()
-                        } catch {
-                            // Handle error
-                            print("Error deleting data: \(error)")
-                        }
-                        refreshID = UUID()
-                    }) {
-                        Text("Clear history")
-                    }
-                    .controlSize(.large)
-                    .padding(0)
-                    
-                    Button(action: {
-                        shouldSendMessage.toggle()
-                    }) {
-                        Text("Send message")
-                    }
-                    .foregroundColor(.blue)
-                    .keyboardShortcut(.return, modifiers: .command)
-                    .controlSize(.large)
-                    .padding(0)
-                }
-                
-                HStack {
-                    Spacer()
-                    Text("Shorcut: Cmd-Enter to send message. Cmd-F to navigate the prompt templates")
-                        .italic()
-                }
+                .onAppear(perform: {
+                    proxy.scrollTo(messages.first?.id, anchor: .bottom)
+                })
             }
-            .padding()
-            .background(Color(red: 44/256, green: 48/256, blue: 50/256))
+            .padding(.bottom, 30)
+            Spacer()
+            
+            if (selectedPrompt == nil) {
+                Text("Choose a prompt template from the sidebar to start")
+                    .font(.system(size: 20))
+                    .foregroundColor(.gray)
+            }
+            
+            PromptEditor(prompt: selectedPrompt, shouldSendMessage: $shouldSendMessage)
+            
+            HStack {
+                Spacer()
+                Button(action: {
+                    shouldSendMessage.toggle()
+                }) {
+                    Text("Send message")
+                }
+                .foregroundColor(.blue)
+                .keyboardShortcut(.return, modifiers: .command)
+                .controlSize(.large)
+            }.padding(.horizontal)
+            
+            HStack {
+                Spacer()
+                Text("Shorcuts: Cmd-Enter to send message. Cmd-F to navigate the prompt templates")
+                    .italic()
+            }
         }
+        .padding()
+        .background(Color(red: 44/256, green: 48/256, blue: 50/256))
+    }
     }
 }
 

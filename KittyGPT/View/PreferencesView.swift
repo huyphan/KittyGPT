@@ -10,15 +10,16 @@ import SwiftUI
 struct PreferencesView: View {
     @State private var apiKey: String = ""
     @State private var isApiKeySaved: Bool = false
+    @Environment(\.dismiss) var dismiss
     
     init() {
         _apiKey = State(initialValue: UserDefaults.standard.string(forKey: "openAiApiKey") ?? "")
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading) {
             HStack(alignment: .top) {
-                Text("API Key").padding(.top, 3)
+                Text("API key").padding(.top, 3)
                 TextField("", text: $apiKey)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .onChange(of: apiKey) { _ in
@@ -29,17 +30,17 @@ struct PreferencesView: View {
                 Spacer()
                 Button(action: {
                     saveApiKey()
+                    dismiss()
                 }) {
-                    Text("Save")
+                    Text("Save and close")
                         .font(.headline)
-                        .padding()
                         .cornerRadius(10)
                 }
                 .controlSize(.large)
                 .disabled(apiKey.isEmpty || isApiKeySaved)
             }
         }
-        .frame(width: 400, height: 100)
+        .frame(width: 550)
         .padding()
     }
     
