@@ -1,6 +1,6 @@
 ## KittyGPT
 
-[![macOS](https://svgshare.com/i/ZjP.svg)](https://svgshare.com/i/ZjP.svg)
+![Github](https://img.shields.io/badge/macOS-13%2B-green)
 
 A simple macOS client of the `text-davinci-003` model of the OpenAI API, the same engine that powers ChatGPT. To use 
 this application, you will need an API key from OpenAI. If you don't have one, you can generate an API key by visiting 
