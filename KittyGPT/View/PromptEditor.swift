@@ -6,6 +6,7 @@ struct PromptEditor: View {
     var prompt: Prompt?
     
     @Environment(\.managedObjectContext) private var viewContext
+    var persistenceController = PersistenceController.shared
     
     let openAIService = OpenAIService()
     
@@ -14,6 +15,7 @@ struct PromptEditor: View {
     @State private var showErrorAlert = false
     @State private var errorMessage = ""
     @State private var formResponse: [String: String] = [:]
+    @State private var isIncludingContext: Bool = true
     @Binding var shouldSendMessage: Bool
     
     var body: some View {
@@ -24,8 +26,8 @@ struct PromptEditor: View {
             if (prompt != nil) {
                 HStack(alignment: .bottom) {
                     VStack {
-                        Text(prompt!.description ?? "NO DESCRIPTION").font(.title2)
-                        ForEach(prompt!.fields ?? []) { field in
+                        Text(prompt!.description).font(.title2)
+                        ForEach(prompt!.fields) { field in
                             VStack {
                                 switch field.type {
                                 case "single-line":
@@ -72,6 +74,13 @@ struct PromptEditor: View {
                     sendMessage()
                 }
             }
+            if (prompt != nil) {
+                HStack(alignment: .bottom) {
+                    Toggle("Include context", isOn: $isIncludingContext)
+                        .padding()
+                    Spacer()
+                }
+            }
         }
         .alert(isPresented: $showErrorAlert) {
             Alert(
@@ -83,14 +92,14 @@ struct PromptEditor: View {
         .padding()
     }
     
-    func buildMessage() -> String {
+    func buildMessage() -> OpenAIConversationMessage {
         var message: String = prompt?.template ?? ""
         for field in prompt?.fields ?? [] {
             message = message.replacingOccurrences(of: "{\(field.name)}", with: formResponse[field.name] ?? "")
         }
-        return message
+        return OpenAIConversationMessage(role: "user", content: message.trimmingCharacters(in: .whitespacesAndNewlines))
     }
-
+    
     func containsEmpty() -> Bool {
         if (prompt == nil) {
             return true
@@ -102,28 +111,42 @@ struct PromptEditor: View {
         }
         return false
     }
-
+    
     func sendMessage (){
         guard !containsEmpty() else {
             return
         }
         let message = self.buildMessage()
-
+        
         // Save the question
         let myMessage = ChatMessage(context: viewContext)
         myMessage.id = UUID().uuidString
-        myMessage.content = message.trimmingCharacters(in: .whitespacesAndNewlines)
+        myMessage.content = message.content
         myMessage.createdAt = Date()
         myMessage.sender = "me"
-
+        
         do {
             try viewContext.save()
         } catch {
             print("Error when saving message")
         }
         
+        var messages: [OpenAIConversationMessage] = []
+        if (isIncludingContext) {
+            var lastMessages = persistenceController.lastConversations(messageCount: 2)
+            // Older messages come first
+            lastMessages.sort { $0.createdAt! < $1.createdAt! }
+            lastMessages.forEach { lastMessage in
+                messages.append(OpenAIConversationMessage(
+                    role: lastMessage.sender == "me" ? "user" : "assistant",
+                    content: lastMessage.content ?? ""
+                ))
+            }
+        }
+        messages.append(message)
+        
         isLoading = true
-        openAIService.sendMessage(message: message).sink { completion in
+        openAIService.sendChatCompletion(messages: messages).sink { completion in
             switch completion {
             case .failure(_):
                 showErrorAlert = true
@@ -132,7 +155,7 @@ struct PromptEditor: View {
             }
             isLoading = false
         } receiveValue: { response in
-            guard let textResponse = response.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines.union(.init(charactersIn: "\""))) else {return}
+            guard let textResponse = response.choices.first?.message.content.trimmingCharacters(in: .whitespacesAndNewlines.union(.init(charactersIn: "\""))) else {return}
             
             // Save the answer
             let chatGPTMessage = ChatMessage(context: viewContext)
@@ -149,7 +172,7 @@ struct PromptEditor: View {
             isLoading = false
         }
         .store(in: &cancellables)
-
+        
         prompt?.fields.forEach { field in
             if field.persistent == nil || !field.persistent! {
                 formResponse.removeValue(forKey: field.name)

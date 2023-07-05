@@ -20,6 +20,7 @@
 		2A6702EF2A1A4EB900AE09DC /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6702EE2A1A4EB900AE09DC /* PersistenceController.swift */; };
 		2A6E2DC52A24A15600921DBB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2A6E2DC42A24A15600921DBB /* Alamofire */; };
 		2A6E2DC82A24A3B800921DBB /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 2A6E2DC72A24A3B800921DBB /* AlertToast */; };
+		2A727F522A5534810079915D /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2A727F512A5534810079915D /* MarkdownUI */; };
 		2AF2011D2A2F407000D6B88E /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF2011C2A2F407000D6B88E /* PreferencesView.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A727F522A5534810079915D /* MarkdownUI in Frameworks */,
 				2A6E2DC52A24A15600921DBB /* Alamofire in Frameworks */,
 				2A6E2DC82A24A3B800921DBB /* AlertToast in Frameworks */,
 			);
@@ -162,6 +164,7 @@
 			packageProductDependencies = (
 				2A6E2DC42A24A15600921DBB /* Alamofire */,
 				2A6E2DC72A24A3B800921DBB /* AlertToast */,
+				2A727F512A5534810079915D /* MarkdownUI */,
 			);
 			productName = KittyGPT;
 			productReference = 2A67026C2A14C10E00AE09DC /* KittyGPT.app */;
@@ -194,6 +197,7 @@
 			packageReferences = (
 				2A6E2DC32A24A15600921DBB /* XCRemoteSwiftPackageReference "Alamofire" */,
 				2A6E2DC62A24A3B800921DBB /* XCRemoteSwiftPackageReference "AlertToast" */,
+				2A727F502A5534810079915D /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 			);
 			productRefGroup = 2A67026D2A14C10E00AE09DC /* Products */;
 			projectDirPath = "";
@@ -454,6 +458,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		2A727F502A5534810079915D /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -466,6 +478,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2A6E2DC62A24A3B800921DBB /* XCRemoteSwiftPackageReference "AlertToast" */;
 			productName = AlertToast;
+		};
+		2A727F512A5534810079915D /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2A727F502A5534810079915D /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 

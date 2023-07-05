@@ -11,7 +11,7 @@ import Combine
 
 @main
 struct KittyGPTApp: App {
-    @StateObject private var persistenceController = PersistenceController()
+    @StateObject private var persistenceController = PersistenceController.shared
     @Environment(\.scenePhase) var scenePhase
     
     @State var shouldFocusPromptTemplateList: Bool = false

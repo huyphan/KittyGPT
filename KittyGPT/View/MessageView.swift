@@ -1,6 +1,7 @@
 import SwiftUI
 import AppKit
 import AlertToast
+import MarkdownUI
 
 struct MessageView: View {
     var message: ChatMessage
@@ -15,14 +16,12 @@ struct MessageView: View {
                     .frame(width: 100)
                 Spacer()
             }
-            Text(message.content ?? "")
+            Markdown(message.content ?? "")
                 .foregroundColor(message.sender == "me" ? .white : nil)
                 .padding(10.0)
                 .background(message.sender == "me" ? .blue : Color(red: 57/256, green: 62/256, blue: 64/256))
                 .cornerRadius(10)
                 .textSelection(.enabled)
-                .font(.custom("Menlo", size: 13))
-                .lineSpacing(8)
             if message.sender == "chatGPT" {
                 VStack {
                     Spacer()

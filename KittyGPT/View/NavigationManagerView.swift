@@ -76,7 +76,7 @@ struct NavigationmanagerView: View {
     @Binding var shouldFocusPromptTemplateList: Bool
     
     @Environment(\.managedObjectContext) private var viewContext
-    
+    var persistenceController = PersistenceController.shared
     
     init(shouldFocusPromptTemplateList: Binding<Bool>) {
         request = ChatMessage.fetchRequest()
@@ -150,19 +150,8 @@ struct NavigationmanagerView: View {
                             NSWorkspace.shared.activateFileViewerSelecting([fileURL])
                         }
                         Button("Clear history") {
-                            // This code should be moved to PersistenceController
-                            let fetchRequest: NSFetchRequest<NSFetchRequestResult> = ChatMessage.fetchRequest()
-                            
-                            let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-                            
-                            do {
-                                try viewContext.execute(batchDeleteRequest)
-                                try viewContext.save()
-                                viewContext.reset()
-                            } catch {
-                                // Handle error
-                                print("Error deleting data: \(error)")
-                            }
+                            persistenceController.deleteAll()
+                            viewContext.reset()
                             refreshID = UUID()
                         }
                     } label: {
