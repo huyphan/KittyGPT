@@ -2,7 +2,7 @@
 
 ![Github](https://img.shields.io/badge/macOS-13%2B-green)
 
-A simple macOS client of the `text-davinci-003` model of the OpenAI API, the same engine that powers ChatGPT. To use 
+A simple macOS client of the `gpt-3.5-turbo` model of the OpenAI API, the same engine that powers ChatGPT. To use 
 this application, you will need an API key from OpenAI. If you don't have one, you can generate an API key by visiting 
 the [OpenAI API Keys](https://platform.openai.com/account/api-keys) page.
 
