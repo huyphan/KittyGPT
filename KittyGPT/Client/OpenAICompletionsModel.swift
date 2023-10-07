@@ -13,8 +13,6 @@ struct OpenAICompletionResponse: Decodable {
 struct OpenAICompletionResponseChoice: Decodable {
     let text: String
 }
-
-
 struct OpenAIChatBody: Encodable {
     let model: String
     let messages: [OpenAIConversationMessage]

@@ -20,6 +20,10 @@
 		2A6702EF2A1A4EB900AE09DC /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6702EE2A1A4EB900AE09DC /* PersistenceController.swift */; };
 		2A6E2DC52A24A15600921DBB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2A6E2DC42A24A15600921DBB /* Alamofire */; };
 		2A6E2DC82A24A3B800921DBB /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 2A6E2DC72A24A3B800921DBB /* AlertToast */; };
+		2A71ED8A2ACFF9AF002C92A4 /* AIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A71ED892ACFF9AF002C92A4 /* AIClient.swift */; };
+		2A71ED8C2ACFFF52002C92A4 /* AWSBedrockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A71ED8B2ACFFF52002C92A4 /* AWSBedrockService.swift */; };
+		2A71ED922AD0D270002C92A4 /* AWSBedrockRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 2A71ED912AD0D270002C92A4 /* AWSBedrockRuntime */; };
+		2A71ED942AD167CF002C92A4 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A71ED932AD167CF002C92A4 /* Configurations.swift */; };
 		2A727F522A5534810079915D /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2A727F512A5534810079915D /* MarkdownUI */; };
 		2AF2011D2A2F407000D6B88E /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF2011C2A2F407000D6B88E /* PreferencesView.swift */; };
 /* End PBXBuildFile section */
@@ -51,6 +55,9 @@
 		2A6702882A196A2000AE09DC /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		2A6702EB2A1A4E3600AE09DC /* KittyGPT.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = KittyGPT.xcdatamodel; sourceTree = "<group>"; };
 		2A6702EE2A1A4EB900AE09DC /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		2A71ED892ACFF9AF002C92A4 /* AIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIClient.swift; sourceTree = "<group>"; };
+		2A71ED8B2ACFFF52002C92A4 /* AWSBedrockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSBedrockService.swift; sourceTree = "<group>"; };
+		2A71ED932AD167CF002C92A4 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		2AF2011C2A2F407000D6B88E /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,6 +68,7 @@
 			files = (
 				2A727F522A5534810079915D /* MarkdownUI in Frameworks */,
 				2A6E2DC52A24A15600921DBB /* Alamofire in Frameworks */,
+				2A71ED922AD0D270002C92A4 /* AWSBedrockRuntime in Frameworks */,
 				2A6E2DC82A24A3B800921DBB /* AlertToast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -131,6 +139,7 @@
 			children = (
 				2A6702EE2A1A4EB900AE09DC /* PersistenceController.swift */,
 				2A257E0E2A1C77C7009C9C13 /* PromptConfigurationModel.swift */,
+				2A71ED932AD167CF002C92A4 /* Configurations.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -140,6 +149,8 @@
 			children = (
 				2A6702842A17B7FB00AE09DC /* OpenAICompletionsModel.swift */,
 				2A6702862A17B82A00AE09DC /* OpenAIService.swift */,
+				2A71ED892ACFF9AF002C92A4 /* AIClient.swift */,
+				2A71ED8B2ACFFF52002C92A4 /* AWSBedrockService.swift */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -165,6 +176,7 @@
 				2A6E2DC42A24A15600921DBB /* Alamofire */,
 				2A6E2DC72A24A3B800921DBB /* AlertToast */,
 				2A727F512A5534810079915D /* MarkdownUI */,
+				2A71ED912AD0D270002C92A4 /* AWSBedrockRuntime */,
 			);
 			productName = KittyGPT;
 			productReference = 2A67026C2A14C10E00AE09DC /* KittyGPT.app */;
@@ -198,6 +210,7 @@
 				2A6E2DC32A24A15600921DBB /* XCRemoteSwiftPackageReference "Alamofire" */,
 				2A6E2DC62A24A3B800921DBB /* XCRemoteSwiftPackageReference "AlertToast" */,
 				2A727F502A5534810079915D /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+				2A71ED902AD0D270002C92A4 /* XCRemoteSwiftPackageReference "aws-sdk-swift" */,
 			);
 			productRefGroup = 2A67026D2A14C10E00AE09DC /* Products */;
 			projectDirPath = "";
@@ -229,10 +242,13 @@
 				2A6702872A17B82A00AE09DC /* OpenAIService.swift in Sources */,
 				2A67027F2A14CB7B00AE09DC /* NavigationManagerView.swift in Sources */,
 				2A6702852A17B7FB00AE09DC /* OpenAICompletionsModel.swift in Sources */,
+				2A71ED8C2ACFFF52002C92A4 /* AWSBedrockService.swift in Sources */,
 				2A6702EF2A1A4EB900AE09DC /* PersistenceController.swift in Sources */,
 				2A257E052A1C7684009C9C13 /* PromptEditor.swift in Sources */,
 				2A257E0F2A1C77C7009C9C13 /* PromptConfigurationModel.swift in Sources */,
+				2A71ED942AD167CF002C92A4 /* Configurations.swift in Sources */,
 				2A6702702A14C10E00AE09DC /* KittyGPTApp.swift in Sources */,
+				2A71ED8A2ACFF9AF002C92A4 /* AIClient.swift in Sources */,
 				2A6702892A196A2100AE09DC /* MessageView.swift in Sources */,
 				2AF2011D2A2F407000D6B88E /* PreferencesView.swift in Sources */,
 			);
@@ -458,6 +474,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		2A71ED902AD0D270002C92A4 /* XCRemoteSwiftPackageReference "aws-sdk-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/awslabs/aws-sdk-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.27.0;
+			};
+		};
 		2A727F502A5534810079915D /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
@@ -478,6 +502,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2A6E2DC62A24A3B800921DBB /* XCRemoteSwiftPackageReference "AlertToast" */;
 			productName = AlertToast;
+		};
+		2A71ED912AD0D270002C92A4 /* AWSBedrockRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2A71ED902AD0D270002C92A4 /* XCRemoteSwiftPackageReference "aws-sdk-swift" */;
+			productName = AWSBedrockRuntime;
 		};
 		2A727F512A5534810079915D /* MarkdownUI */ = {
 			isa = XCSwiftPackageProductDependency;

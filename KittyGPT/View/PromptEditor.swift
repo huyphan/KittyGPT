@@ -8,8 +8,6 @@ struct PromptEditor: View {
     @Environment(\.managedObjectContext) private var viewContext
     var persistenceController = PersistenceController.shared
     
-    let openAIService = OpenAIService()
-    
     @State var cancellables = Set<AnyCancellable>()
     @State var isLoading = false
     @State private var showErrorAlert = false
@@ -27,6 +25,7 @@ struct PromptEditor: View {
                 HStack(alignment: .bottom) {
                     VStack {
                         Text(prompt!.description).font(.title2)
+                        Text("Backend: \(Configurations.backend.rawValue)").italic()
                         ForEach(prompt!.fields) { field in
                             VStack {
                                 switch field.type {
@@ -71,7 +70,9 @@ struct PromptEditor: View {
                     }
                 }
                 .onChange(of: shouldSendMessage) { _ in
-                    sendMessage()
+                    Task {
+                        await sendMessage()
+                    }
                 }
             }
             if (prompt != nil) {
@@ -92,12 +93,12 @@ struct PromptEditor: View {
         .padding()
     }
     
-    func buildMessage() -> OpenAIConversationMessage {
+    func buildMessage() -> ConversationMessage {
         var message: String = prompt?.template ?? ""
         for field in prompt?.fields ?? [] {
             message = message.replacingOccurrences(of: "{\(field.name)}", with: formResponse[field.name] ?? "")
         }
-        return OpenAIConversationMessage(role: "user", content: message.trimmingCharacters(in: .whitespacesAndNewlines))
+        return ConversationMessage(role: Role.human, content: message.trimmingCharacters(in: .whitespacesAndNewlines))
     }
     
     func containsEmpty() -> Bool {
@@ -112,7 +113,11 @@ struct PromptEditor: View {
         return false
     }
     
-    func sendMessage (){
+    func getBackend() -> Backend {
+        return Backend(rawValue: UserDefaults.standard.string(forKey: "backend")!) ?? Backend.openai
+    }
+    
+    func sendMessage () async {
         guard !containsEmpty() else {
             return
         }
@@ -131,14 +136,14 @@ struct PromptEditor: View {
             print("Error when saving message")
         }
         
-        var messages: [OpenAIConversationMessage] = []
+        var messages: [ConversationMessage] = []
         if (isIncludingContext) {
             var lastMessages = persistenceController.lastConversations(messageCount: 2)
             // Older messages come first
             lastMessages.sort { $0.createdAt! < $1.createdAt! }
             lastMessages.forEach { lastMessage in
-                messages.append(OpenAIConversationMessage(
-                    role: lastMessage.sender == "me" ? "user" : "assistant",
+                messages.append(ConversationMessage(
+                    role: lastMessage.sender == "me" ? Role.human : Role.assistant,
                     content: lastMessage.content ?? ""
                 ))
             }
@@ -146,21 +151,26 @@ struct PromptEditor: View {
         messages.append(message)
         
         isLoading = true
-        openAIService.sendChatCompletion(messages: messages).sink { completion in
+        let backend = getBackend()
+        let service: AIService
+        if (backend == Backend.openai) {
+            service = OpenAIService()
+        } else {
+            service = await AWSBedrockService()
+        }
+        service.sendChatCompletion(messages: messages).sink { completion in
             switch completion {
-            case .failure(_):
+            case .failure(let error):
                 showErrorAlert = true
-                errorMessage = "Failed to send prompt to OpenAI. Check your API Key in Settings."
+                errorMessage = "Failed to send prompt. Error: \(error)"
             case .finished: print("Received response")
             }
             isLoading = false
         } receiveValue: { response in
-            guard let textResponse = response.choices.first?.message.content.trimmingCharacters(in: .whitespacesAndNewlines.union(.init(charactersIn: "\""))) else {return}
-            
             // Save the answer
             let chatGPTMessage = ChatMessage(context: viewContext)
             chatGPTMessage.id = response.id
-            chatGPTMessage.content = textResponse
+            chatGPTMessage.content = response.message
             chatGPTMessage.createdAt = Date()
             chatGPTMessage.sender = "chatGPT"
             do {

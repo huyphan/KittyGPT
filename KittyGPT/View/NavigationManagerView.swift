@@ -161,58 +161,58 @@ struct NavigationmanagerView: View {
                     .menuIndicator(.hidden)
                     .fixedSize()
                     .padding(.bottom, 8)
-                }
+                }.frame(height: 25)
             }.focusSection()
         }
-    detail: {
-        VStack {
-            // Message list
-            ScrollViewReader { proxy in
-                ScrollView {
-                    ForEach(self.messages.reversed(), id: \.self) { item in
-                        MessageView(message: item).id(item.id)
+        detail: {
+            VStack {
+                // Message list
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        ForEach(self.messages.reversed(), id: \.self) { item in
+                            MessageView(message: item).id(item.id)
+                        }
+                        .id(refreshID)
                     }
-                    .id(refreshID)
+                    .onChange(of: messages.first?.id) { _ in
+                        proxy.scrollTo(messages.first?.id, anchor: .bottom)
+                    }
+                    .onAppear(perform: {
+                        proxy.scrollTo(messages.first?.id, anchor: .bottom)
+                    })
                 }
-                .onChange(of: messages.first?.id) { _ in
-                    proxy.scrollTo(messages.first?.id, anchor: .bottom)
-                }
-                .onAppear(perform: {
-                    proxy.scrollTo(messages.first?.id, anchor: .bottom)
-                })
-            }
-            .padding(.bottom, 30)
-            Spacer()
-            
-            if (selectedPrompt == nil) {
-                Text("Choose a prompt template from the sidebar to start")
-                    .font(.system(size: 20))
-                    .foregroundColor(.gray)
-            }
-            
-            PromptEditor(prompt: selectedPrompt, shouldSendMessage: $shouldSendMessage)
-            
-            HStack {
+                .padding(.bottom, 30)
                 Spacer()
-                Button(action: {
-                    shouldSendMessage.toggle()
-                }) {
-                    Text("Send message")
+                
+                if (selectedPrompt == nil) {
+                    Text("Choose a prompt template from the sidebar to start")
+                        .font(.system(size: 20))
+                        .foregroundColor(.gray)
                 }
-                .foregroundColor(.blue)
-                .keyboardShortcut(.return, modifiers: .command)
-                .controlSize(.large)
-            }.padding(.horizontal)
-            
-            HStack {
-                Spacer()
-                Text("Shorcuts: Cmd-Enter to send message. Cmd-F to navigate the prompt templates")
-                    .italic()
+                
+                PromptEditor(prompt: selectedPrompt, shouldSendMessage: $shouldSendMessage)
+                
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        shouldSendMessage.toggle()
+                    }) {
+                        Text("Send message")
+                    }
+                    .foregroundColor(.blue)
+                    .keyboardShortcut(.return, modifiers: .command)
+                    .controlSize(.large)
+                }.padding(.horizontal)
+                
+                HStack {
+                    Spacer()
+                    Text("Shorcuts: Cmd-Enter to send message. Cmd-F to navigate the prompt templates")
+                        .italic()
+                }
             }
+            .padding()
+            .background(Color(red: 44/256, green: 48/256, blue: 50/256))
         }
-        .padding()
-        .background(Color(red: 44/256, green: 48/256, blue: 50/256))
-    }
     }
 }
 
