@@ -21,16 +21,16 @@ class AWSBedrockService: AIService {
     
     public init() {
         do {
-            let region = UserDefaults.standard.string(forKey: "awsRegion") ?? "us-east-1"
+            let region = Configurations.awsRegion
             let credentialsProvider: CredentialsProviding
             if (Configurations.awsCredsMode == AWSCredsMode.profile) {
                 credentialsProvider = try ProfileCredentialsProvider(profileName: Configurations.awsProfile)
             } else {
-                credentialsProvider = try StaticCredentialsProvider(Credentials(accessKey: Configurations.awsAccessKey, secret: Configurations.awsSecretKey))
+                credentialsProvider = try StaticCredentialsProvider(Credentials(accessKey: Configurations.awsAccessKey, secret: Configurations.awsSecretKey, sessionToken: Configurations.awsSessionToken))
             }
             
             let config = try BedrockRuntimeClient.BedrockRuntimeClientConfiguration(region: region, credentialsProvider: credentialsProvider)
-            client = try BedrockRuntimeClient(config: config)
+            client = BedrockRuntimeClient(config: config)
         } catch {
             print("ERROR: ", dump(error, name: "Initializing Bedrock runtime client"))
             exit(1)
