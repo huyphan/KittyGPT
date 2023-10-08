@@ -17,7 +17,7 @@ class Configurations {
           UserDefaults.standard.set(newValue.rawValue, forKey: "awsCredsMode")
       }
       get {
-          return AWSCredsMode(rawValue: UserDefaults.standard.string(forKey: "awsCredsMode")!) ?? AWSCredsMode.profile
+          return AWSCredsMode(rawValue: UserDefaults.standard.string(forKey: "awsCredsMode") ?? AWSCredsMode.profile.rawValue)!
       }
     }
 
@@ -26,7 +26,7 @@ class Configurations {
           UserDefaults.standard.set(newValue.rawValue, forKey: "backend")
       }
       get {
-          return Backend(rawValue: UserDefaults.standard.string(forKey: "backend")!) ?? Backend.openai
+          return Backend(rawValue: UserDefaults.standard.string(forKey: "backend") ?? Backend.openai.rawValue)!
       }
     }
 
@@ -71,7 +71,7 @@ class Configurations {
           UserDefaults.standard.set(newValue, forKey: "awsProfile")
       }
       get {
-          return UserDefaults.standard.string(forKey: "awsProfile") ?? ""
+          return UserDefaults.standard.string(forKey: "awsProfile") ?? "default"
       }
     }
     

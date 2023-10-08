@@ -11,7 +11,7 @@ struct PreferencesView: View {
     @State private var backend: Backend = Configurations.backend
     @State private var openAIApiKey: String = Configurations.openAIApiKey
     @State private var awsCredsMode: AWSCredsMode = Configurations.awsCredsMode
-    @State private var awsProfile: String = Configurations.awsRegion
+    @State private var awsProfile: String = Configurations.awsProfile
     @State private var awsAccessKey: String = Configurations.awsAccessKey
     @State private var awsSecretKey: String = Configurations.awsSecretKey
     @State private var awsSessionToken: String = Configurations.awsSessionToken

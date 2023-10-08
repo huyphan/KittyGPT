@@ -112,11 +112,7 @@ struct PromptEditor: View {
         }
         return false
     }
-    
-    func getBackend() -> Backend {
-        return Backend(rawValue: UserDefaults.standard.string(forKey: "backend")!) ?? Backend.openai
-    }
-    
+
     func sendMessage () async {
         guard !containsEmpty() else {
             return
@@ -151,9 +147,8 @@ struct PromptEditor: View {
         messages.append(message)
         
         isLoading = true
-        let backend = getBackend()
         let service: AIService
-        if (backend == Backend.openai) {
+        if (Configurations.backend == Backend.openai) {
             service = OpenAIService()
         } else {
             service = await AWSBedrockService()
