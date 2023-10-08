@@ -192,22 +192,23 @@ struct NavigationmanagerView: View {
                 
                 PromptEditor(prompt: selectedPrompt, shouldSendMessage: $shouldSendMessage)
                 
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        shouldSendMessage.toggle()
-                    }) {
-                        Text("Send message")
+                if (selectedPrompt != nil) {
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            shouldSendMessage.toggle()
+                        }) {
+                            Text("Send message")
+                        }
+                        .foregroundColor(.blue)
+                        .keyboardShortcut(.return, modifiers: .command)
+                        .controlSize(.large)
+                    }.padding(.horizontal)
+                    HStack {
+                        Spacer()
+                        Text("Shorcuts: Cmd-Enter to send message. Cmd-F to navigate the prompt templates")
+                            .italic()
                     }
-                    .foregroundColor(.blue)
-                    .keyboardShortcut(.return, modifiers: .command)
-                    .controlSize(.large)
-                }.padding(.horizontal)
-                
-                HStack {
-                    Spacer()
-                    Text("Shorcuts: Cmd-Enter to send message. Cmd-F to navigate the prompt templates")
-                        .italic()
                 }
             }
             .padding()
