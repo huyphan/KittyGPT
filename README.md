@@ -1,5 +1,7 @@
 ## KittyGPT
 
+![Screenshot](screenshot.png)
+
 A simple macOS client for OpenAI and Claude models. Supported models include:
 * `text-davinci-003` model of the OpenAI API, the same engine that powers ChatGPT. 
 * Claude instance via AWS Bedrock
