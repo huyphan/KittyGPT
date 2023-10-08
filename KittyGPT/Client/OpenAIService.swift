@@ -21,6 +21,7 @@ class OpenAIService: AIService {
         return Future { [weak self] promise in
             guard let self = self else {return}
             AF.request(self.chatUrl, method: .post, parameters: body, encoder: .json, headers: headers)
+                .validate(statusCode: 200..<300)
                 .responseDecodable(of: OpenAIChatResponse.self) { response in
 
                     switch response.result {
