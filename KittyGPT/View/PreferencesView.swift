@@ -97,6 +97,7 @@ struct PreferencesView: View {
                     TextField("", text: $awsRegion)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                 }
+                .padding(.leading, 20)
             }
 
             HStack() {
