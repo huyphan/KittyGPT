@@ -58,6 +58,7 @@
 		2A71ED892ACFF9AF002C92A4 /* AIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIClient.swift; sourceTree = "<group>"; };
 		2A71ED8B2ACFFF52002C92A4 /* AWSBedrockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSBedrockService.swift; sourceTree = "<group>"; };
 		2A71ED932AD167CF002C92A4 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
+		2A71ED952AD25FE6002C92A4 /* KittyGPTRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KittyGPTRelease.entitlements; sourceTree = "<group>"; };
 		2AF2011C2A2F407000D6B88E /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,6 +98,7 @@
 		2A67026E2A14C10E00AE09DC /* KittyGPT */ = {
 			isa = PBXGroup;
 			children = (
+				2A71ED952AD25FE6002C92A4 /* KittyGPTRelease.entitlements */,
 				2A6702F92A1B789500AE09DC /* Client */,
 				2A6702ED2A1A4E8B00AE09DC /* Data */,
 				2A6702E52A19F38A00AE09DC /* View */,
@@ -409,7 +411,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = KittyGPT/KittyGPT.entitlements;
+				CODE_SIGN_ENTITLEMENTS = KittyGPT/KittyGPTRelease.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
