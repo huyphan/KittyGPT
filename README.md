@@ -4,7 +4,7 @@
 
 A simple macOS client for OpenAI and Claude models. Supported models include:
 * `text-davinci-003` model of the OpenAI API, the same engine that powers ChatGPT. 
-* Claude instance via AWS Bedrock
+* Claude (instant and v2) via AWS Bedrock.
 
 To use this application, you will need either:
 * An API key from OpenAI. If you don't have one, you can generate an API key by visiting 
