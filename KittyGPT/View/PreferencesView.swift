@@ -28,7 +28,10 @@ struct PreferencesView: View {
                     .tag(Backend.openai)
 
                 Text("Claude Instance v1 via AWS Bedrock")
-                    .tag(Backend.bedrock_claude_instance_1)
+                    .tag(Backend.bedrock_claude_instance_v1)
+                
+                Text("Claude v2 via AWS Bedrock")
+                    .tag(Backend.bedrock_claude_v2)
             }
             .pickerStyle(.radioGroup)
             .padding(.bottom, 5)
@@ -44,7 +47,7 @@ struct PreferencesView: View {
                 .padding(.leading, 20)
             }
                 
-            if (backend == Backend.bedrock_claude_instance_1) {
+            if (backend == Backend.bedrock_claude_instance_v1 || backend == Backend.bedrock_claude_v2) {
                 Text("AWS credentials")
                     .padding(.top, 3)
                     .padding(.leading, 20)

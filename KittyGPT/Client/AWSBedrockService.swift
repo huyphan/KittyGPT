@@ -15,25 +15,46 @@ struct ResponseMessageBody: Decodable {
     let completion: String;
 }
 
+enum InitializationError: Error {
+    case invalidCredentials
+    case emptyCredentials
+    case unknownError
+}
+
+enum RequestError: Error {
+    case invalidModel
+}
+
 class AWSBedrockService: AIService {
     
     let client: BedrockRuntimeClient
     
-    public init() {
+    public init() throws {
         do {
             let region = Configurations.awsRegion
+            let accessKey = Configurations.awsAccessKey
+            let secretKey = Configurations.awsSecretKey
+            let sessionToken = Configurations.awsSessionToken
+            let profile = Configurations.awsProfile
+            
             let credentialsProvider: CredentialsProviding
             if (Configurations.awsCredsMode == AWSCredsMode.profile) {
-                credentialsProvider = try ProfileCredentialsProvider(profileName: Configurations.awsProfile)
+                if (region == "" || profile == "") {
+                    throw InitializationError.emptyCredentials
+                }
+                credentialsProvider = try ProfileCredentialsProvider(profileName: profile)
             } else {
-                credentialsProvider = try StaticCredentialsProvider(Credentials(accessKey: Configurations.awsAccessKey, secret: Configurations.awsSecretKey, sessionToken: Configurations.awsSessionToken))
+                if (region == "" || accessKey == "" || secretKey == "") {
+                    throw InitializationError.emptyCredentials
+                }
+                credentialsProvider = try StaticCredentialsProvider(Credentials(accessKey: accessKey, secret: secretKey, sessionToken: sessionToken))
             }
             
             let config = try BedrockRuntimeClient.BedrockRuntimeClientConfiguration(region: region, credentialsProvider: credentialsProvider)
             client = BedrockRuntimeClient(config: config)
         } catch {
             print("ERROR: ", dump(error, name: "Initializing Bedrock runtime client"))
-            exit(1)
+            throw InitializationError.unknownError
         }
     }
     
@@ -56,11 +77,22 @@ class AWSBedrockService: AIService {
 
         return Future { [self] promise in
             do {
+                var modelId: String = ""
+
+                switch Configurations.backend {
+                case Backend.bedrock_claude_instance_v1:
+                    modelId = "anthropic.claude-instant-v1"
+                case Backend.bedrock_claude_v2:
+                    modelId = "anthropic.claude-v2"
+                default:
+                    promise(.failure(RequestError.invalidModel))
+                }
+
                 let input = try InvokeModelInput(
                     accept: "application/json",
                     body: jsonEncoder.encode(body),
                     contentType: "application/json",
-                    modelId: "anthropic.claude-instant-v1"
+                    modelId: modelId
                 )
                 Task { @MainActor [self] in
                     do {

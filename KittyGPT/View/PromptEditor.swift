@@ -148,11 +148,19 @@ struct PromptEditor: View {
         
         isLoading = true
         let service: AIService
-        if (Configurations.backend == Backend.openai) {
-            service = OpenAIService()
-        } else {
-            service = await AWSBedrockService()
+        do {
+            if (Configurations.backend == Backend.openai) {
+                service = OpenAIService()
+            } else {
+                service = try AWSBedrockService()
+            }
+        } catch {
+            showErrorAlert = true
+            errorMessage = "Failed to initialize client. Check your configurations"
+            isLoading = false
+            return
         }
+
         service.sendChatCompletion(messages: messages).sink { completion in
             switch completion {
             case .failure(let error):

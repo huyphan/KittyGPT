@@ -2,7 +2,8 @@ import Foundation
 
 enum Backend: String {
     case openai = "openai"
-    case bedrock_claude_instance_1 = "bedrock-claude-instant-v1"
+    case bedrock_claude_instance_v1 = "bedrock-claude-instant-v1"
+    case bedrock_claude_v2 = "bedrock-claude-v2"
 }
 
 enum AWSCredsMode: String {
