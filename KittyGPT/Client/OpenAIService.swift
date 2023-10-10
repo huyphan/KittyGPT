@@ -12,10 +12,10 @@ class OpenAIService: AIService {
         }
         let body = OpenAIChatBody(model: "gpt-3.5-turbo", messages: openAIMessages, temperature: 0.6, max_tokens: Configurations.maxReturnedToken)
 
-        let apiKey = UserDefaults.standard.string(forKey: "openAiApiKey")
+        let apiKey = Configurations.openAIApiKey
         
         let headers: HTTPHeaders = [
-            "Authorization" : "Bearer \(apiKey ?? "")"
+            "Authorization" : "Bearer \(apiKey )"
         ]
         
         return Future { [weak self] promise in
