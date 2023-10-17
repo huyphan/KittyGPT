@@ -21,6 +21,13 @@ you are aware of the associated costs before using the application extensively.
 * Prompt templates: you can create templates for prompts, allowing you to quickly generate structured input for the 
   API calls.
 
+## Why I created this project
+
+I needed to streamline my GenAI workflow, but I encountered several limitations with existing tools available in 
+the market. They were either overly expensive, web-based (making me hesitant to trust them with my API key), or lacking 
+the specific features I required. As a personal weekend challenge, I embarked on creating this project to learn SwiftUI 
+and see how far I could go. The code was written with significant guidance and assistance from ChatGPT itself.
+
 ## Credits
 
 This project makes use of the following resources:
