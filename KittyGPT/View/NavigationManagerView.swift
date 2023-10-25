@@ -38,8 +38,8 @@ func loadPromptConfigurations<T: Decodable>() -> T {
     let supportDirectory = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
     
     var data: String = ""
-    let fileURL = supportDirectory?.appendingPathComponent("prompts.json")
-    if (!FileManager.default.fileExists(atPath: fileURL!.absoluteString)) {
+    let fileURL = supportDirectory?.appendingPathComponent("KittyGPT/prompts.json")
+    if (!FileManager.default.fileExists(atPath: fileURL!.path)) {
         saveDefaultPromptTemplate(fileURL: fileURL!)
     }
     print("Reading the file \(fileURL)")
@@ -146,7 +146,7 @@ struct NavigationmanagerView: View {
                         }
                         Button("Locate template file") {
                             let supportDirectory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
-                            let fileURL = supportDirectory!.appendingPathComponent("prompts.json")
+                            let fileURL = supportDirectory!.appendingPathComponent("KittyGPT/prompts.json")
                             NSWorkspace.shared.activateFileViewerSelecting([fileURL])
                         }
                         Button("Clear history") {
