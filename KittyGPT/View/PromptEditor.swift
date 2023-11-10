@@ -149,11 +149,7 @@ struct PromptEditor: View {
         isLoading = true
         let service: AIService
         do {
-            if (Configurations.backend == Backend.openai) {
-                service = OpenAIService()
-            } else {
-                service = try AWSBedrockService()
-            }
+            service = try AWSBedrockService()
         } catch {
             showErrorAlert = true
             errorMessage = "Failed to initialize client. Check your configurations"

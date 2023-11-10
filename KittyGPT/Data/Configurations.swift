@@ -75,15 +75,6 @@ class Configurations {
           return UserDefaults.standard.string(forKey: "awsProfile") ?? "default"
       }
     }
-    
-    static var openAIApiKey: String {
-      set {
-          UserDefaults.standard.set(newValue, forKey: "openAIApiKey")
-      }
-      get {
-          return UserDefaults.standard.string(forKey: "openAIApiKey") ?? ""
-      }
-    }
-    
+        
     static let maxReturnedToken = 256
 }

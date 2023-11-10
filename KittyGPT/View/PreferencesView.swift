@@ -9,7 +9,6 @@ import SwiftUI
 
 struct PreferencesView: View {
     @State private var backend: Backend = Configurations.backend
-    @State private var openAIApiKey: String = Configurations.openAIApiKey
     @State private var awsCredsMode: AWSCredsMode = Configurations.awsCredsMode
     @State private var awsProfile: String = Configurations.awsProfile
     @State private var awsAccessKey: String = Configurations.awsAccessKey
@@ -24,9 +23,6 @@ struct PreferencesView: View {
 
             Text("Backend").padding(.top, 3)
             Picker(selection: $backend, label: Text("")) {
-                Text("OpenAI")
-                    .tag(Backend.openai)
-
                 Text("Claude Instance v1 via AWS Bedrock")
                     .tag(Backend.bedrock_claude_instance_v1)
                 
@@ -37,15 +33,6 @@ struct PreferencesView: View {
             .padding(.bottom, 5)
 
             Divider().padding(.bottom, 5)
-        
-            if (backend == Backend.openai) {
-                HStack(alignment: .top) {
-                    Text("Open AI key").padding(.top, 3)
-                    TextField("", text: $openAIApiKey)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                }
-                .padding(.leading, 20)
-            }
                 
             if (backend == Backend.bedrock_claude_instance_v1 || backend == Backend.bedrock_claude_v2) {
                 Text("AWS credentials")
@@ -128,7 +115,6 @@ struct PreferencesView: View {
         Configurations.awsSessionToken = awsSessionToken
         Configurations.awsRegion = awsRegion
         Configurations.awsProfile = awsProfile
-        Configurations.openAIApiKey = openAIApiKey
     }
 }
 

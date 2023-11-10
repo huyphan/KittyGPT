@@ -13,8 +13,6 @@
 		2A6702742A14C11200AE09DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A6702732A14C11200AE09DC /* Assets.xcassets */; };
 		2A6702772A14C11200AE09DC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A6702762A14C11200AE09DC /* Preview Assets.xcassets */; };
 		2A67027F2A14CB7B00AE09DC /* NavigationManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A67027E2A14CB7B00AE09DC /* NavigationManagerView.swift */; };
-		2A6702852A17B7FB00AE09DC /* OpenAICompletionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6702842A17B7FB00AE09DC /* OpenAICompletionsModel.swift */; };
-		2A6702872A17B82A00AE09DC /* OpenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6702862A17B82A00AE09DC /* OpenAIService.swift */; };
 		2A6702892A196A2100AE09DC /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6702882A196A2000AE09DC /* MessageView.swift */; };
 		2A6702EC2A1A4E3600AE09DC /* KittyGPT.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2A6702EA2A1A4E3600AE09DC /* KittyGPT.xcdatamodeld */; };
 		2A6702EF2A1A4EB900AE09DC /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6702EE2A1A4EB900AE09DC /* PersistenceController.swift */; };
@@ -50,8 +48,6 @@
 		2A6702762A14C11200AE09DC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2A6702782A14C11200AE09DC /* KittyGPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KittyGPT.entitlements; sourceTree = "<group>"; };
 		2A67027E2A14CB7B00AE09DC /* NavigationManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManagerView.swift; sourceTree = "<group>"; };
-		2A6702842A17B7FB00AE09DC /* OpenAICompletionsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAICompletionsModel.swift; sourceTree = "<group>"; };
-		2A6702862A17B82A00AE09DC /* OpenAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIService.swift; sourceTree = "<group>"; };
 		2A6702882A196A2000AE09DC /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		2A6702EB2A1A4E3600AE09DC /* KittyGPT.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = KittyGPT.xcdatamodel; sourceTree = "<group>"; };
 		2A6702EE2A1A4EB900AE09DC /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
@@ -149,8 +145,6 @@
 		2A6702F92A1B789500AE09DC /* Client */ = {
 			isa = PBXGroup;
 			children = (
-				2A6702842A17B7FB00AE09DC /* OpenAICompletionsModel.swift */,
-				2A6702862A17B82A00AE09DC /* OpenAIService.swift */,
 				2A71ED892ACFF9AF002C92A4 /* AIClient.swift */,
 				2A71ED8B2ACFFF52002C92A4 /* AWSBedrockService.swift */,
 			);
@@ -241,9 +235,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A6702EC2A1A4E3600AE09DC /* KittyGPT.xcdatamodeld in Sources */,
-				2A6702872A17B82A00AE09DC /* OpenAIService.swift in Sources */,
 				2A67027F2A14CB7B00AE09DC /* NavigationManagerView.swift in Sources */,
-				2A6702852A17B7FB00AE09DC /* OpenAICompletionsModel.swift in Sources */,
 				2A71ED8C2ACFFF52002C92A4 /* AWSBedrockService.swift in Sources */,
 				2A6702EF2A1A4EB900AE09DC /* PersistenceController.swift in Sources */,
 				2A257E052A1C7684009C9C13 /* PromptEditor.swift in Sources */,
