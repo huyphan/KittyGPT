@@ -166,6 +166,7 @@ struct PromptEditor: View {
             case .failure(let error):
                 showErrorAlert = true
                 errorMessage = "Failed to send prompt. Error: \(error)"
+                viewContext.delete(myMessage)
             case .finished: print("Received response")
             }
             isLoading = false
@@ -183,14 +184,14 @@ struct PromptEditor: View {
                 errorMessage = "Can't save message to local database"
             }
             isLoading = false
-        }
-        .store(in: &cancellables)
-        
-        prompt?.fields.forEach { field in
-            if field.persistent == nil || !field.persistent! {
-                formResponse.removeValue(forKey: field.name)
+            
+            prompt?.fields.forEach { field in
+                if field.persistent == nil || !field.persistent! {
+                    formResponse.removeValue(forKey: field.name)
+                }
             }
         }
+        .store(in: &cancellables)
         
         showErrorAlert = false
         errorMessage = ""
