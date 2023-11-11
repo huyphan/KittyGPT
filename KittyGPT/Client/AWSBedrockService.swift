@@ -67,7 +67,7 @@ class AWSBedrockService: AIService {
                 prompt.append("\n\nAssistant: " + message.content)
             }
         }
-        prompt.append("\n\nAssistant: ")
+        prompt.append("\n\nAssistant: Here is the answer:\n\n")
         let body: RequestMessageBody = RequestMessageBody(
             prompt: prompt,
             max_tokens_to_sample: Configurations.maxReturnedToken
