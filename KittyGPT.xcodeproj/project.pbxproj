@@ -25,6 +25,7 @@
 		2A71ED922AD0D270002C92A4 /* AWSBedrockRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 2A71ED912AD0D270002C92A4 /* AWSBedrockRuntime */; };
 		2A71ED942AD167CF002C92A4 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A71ED932AD167CF002C92A4 /* Configurations.swift */; };
 		2A727F522A5534810079915D /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2A727F512A5534810079915D /* MarkdownUI */; };
+		2A7983572AFF8AB40065A20B /* InternalNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7983562AFF8AB40065A20B /* InternalNotifications.swift */; };
 		2AF2011D2A2F407000D6B88E /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF2011C2A2F407000D6B88E /* PreferencesView.swift */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,7 @@
 		2A71ED8B2ACFFF52002C92A4 /* AWSBedrockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSBedrockService.swift; sourceTree = "<group>"; };
 		2A71ED932AD167CF002C92A4 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		2A71ED952AD25FE6002C92A4 /* KittyGPTRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KittyGPTRelease.entitlements; sourceTree = "<group>"; };
+		2A7983562AFF8AB40065A20B /* InternalNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalNotifications.swift; sourceTree = "<group>"; };
 		2AF2011C2A2F407000D6B88E /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -142,6 +144,7 @@
 				2A6702EE2A1A4EB900AE09DC /* PersistenceController.swift */,
 				2A257E0E2A1C77C7009C9C13 /* PromptConfigurationModel.swift */,
 				2A71ED932AD167CF002C92A4 /* Configurations.swift */,
+				2A7983562AFF8AB40065A20B /* InternalNotifications.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 			files = (
 				2A6702EC2A1A4E3600AE09DC /* KittyGPT.xcdatamodeld in Sources */,
 				2A6702872A17B82A00AE09DC /* OpenAIService.swift in Sources */,
+				2A7983572AFF8AB40065A20B /* InternalNotifications.swift in Sources */,
 				2A67027F2A14CB7B00AE09DC /* NavigationManagerView.swift in Sources */,
 				2A6702852A17B7FB00AE09DC /* OpenAICompletionsModel.swift in Sources */,
 				2A71ED8C2ACFFF52002C92A4 /* AWSBedrockService.swift in Sources */,

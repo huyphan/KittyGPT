@@ -108,6 +108,7 @@ struct PreferencesView: View {
                 Button(action: {
                     saveApiKey()
                     dismiss()
+                    NotificationCenter.default.post(name: Notification.Name.configurationsChangedNotification, object: nil)
                 }) {
                     Text("Save and close")
                         .font(.headline)
@@ -119,6 +120,7 @@ struct PreferencesView: View {
         .frame(width: 550)
         .padding()
     }
+        
     
     private func saveApiKey() {
         Configurations.backend = backend
