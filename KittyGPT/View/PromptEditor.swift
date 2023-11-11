@@ -14,6 +14,7 @@ struct PromptEditor: View {
     @State private var errorMessage = ""
     @State private var formResponse: [String: String] = [:]
     @State private var isIncludingContext: Bool = true
+    @State private var backend = Configurations.backend.rawValue
     @Binding var shouldSendMessage: Bool
     
     var body: some View {
@@ -25,7 +26,10 @@ struct PromptEditor: View {
                 HStack(alignment: .bottom) {
                     VStack {
                         Text(prompt!.description).font(.title2)
-                        Text("Backend: \(Configurations.backend.rawValue)").italic()
+                        Text("Backend: \(backend)").italic()
+                            .onReceive(NotificationCenter.default.publisher(for: Notification.Name.configurationsChangedNotification)) { object in
+                                backend = Configurations.backend.rawValue
+                            }
                         ForEach(prompt!.fields) { field in
                             VStack {
                                 switch field.type {
