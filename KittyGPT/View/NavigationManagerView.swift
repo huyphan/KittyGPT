@@ -19,43 +19,50 @@ enum SideBarItem: String, Identifiable, CaseIterable {
     case dynamicPrompt = "Test - Dynamic prompt"
 }
 
-func saveDefaultPromptTemplate(fileURL: URL) {
-    guard let asset = NSDataAsset(name: "DefaultPrompts") else {
-        fatalError("Missing data asset: DefaultPrompts")
+class ObservablePromptConfigurations: ObservableObject {
+    @Published var template: PromptTemplate = PromptTemplate(groups: [])
+    
+    init() {
+        loadPromptTemplate()
     }
     
-    let data = asset.data
-    do {
-        try data.write(to: fileURL)
-    } catch {
-        fatalError("Couldn't save the default prompts to disk")
-    }
-}
-
-func loadPromptConfigurations<T: Decodable>() -> T {
-    
-    let fileManager = FileManager.default
-    let supportDirectory = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
-    
-    var data: String = ""
-    let fileURL = supportDirectory?.appendingPathComponent("KittyGPT/prompts.json")
-    if (!FileManager.default.fileExists(atPath: fileURL!.path)) {
-        saveDefaultPromptTemplate(fileURL: fileURL!)
-    }
-    print("Reading the file \(fileURL)")
-    do {
-        data = try String(contentsOf: fileURL!)
-    } catch {
-        // Handle error reading file
-        print("Error reading file: \(error.localizedDescription)")
+    func saveDefaultPromptTemplate(fileURL: URL) {
+        guard let asset = NSDataAsset(name: "DefaultPrompts") else {
+            fatalError("Missing data asset: DefaultPrompts")
+        }
+        
+        let data = asset.data
+        do {
+            try data.write(to: fileURL)
+        } catch {
+            fatalError("Couldn't save the default prompts to disk")
+        }
     }
     
-    
-    do {
-        let decoder = JSONDecoder()
-        return try decoder.decode(T.self, from: data.data(using: .utf8)!)
-    } catch {
-        fatalError("Couldn't parse the prompt configuration file as \(T.self):\n\(error)")
+    public func loadPromptTemplate() {
+        
+        let fileManager = FileManager.default
+        let supportDirectory = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+        
+        var data: String = ""
+        let fileURL = supportDirectory?.appendingPathComponent("KittyGPT/prompts.json")
+        if (!FileManager.default.fileExists(atPath: fileURL!.path)) {
+            saveDefaultPromptTemplate(fileURL: fileURL!)
+        }
+        print("Reading the file \(fileURL)")
+        do {
+            data = try String(contentsOf: fileURL!)
+        } catch {
+            // Handle error reading file
+            print("Error reading file: \(error.localizedDescription)")
+        }
+        
+        do {
+            let decoder = JSONDecoder()
+            template = try decoder.decode(PromptTemplate.self, from: data.data(using: .utf8)!)
+        } catch {
+            fatalError("Couldn't parse the prompt configuration file as \(PromptTemplate.self):\n\(error)")
+        }
     }
 }
 
@@ -69,11 +76,23 @@ struct NavigationmanagerView: View {
     private var messages: FetchedResults<ChatMessage>
     private var request: NSFetchRequest<ChatMessage>
     
-    private var promptConfigurations: PromptConfigurations = loadPromptConfigurations()
-    private var prompts: [String: Prompt] = [:]
+    @StateObject private var promptConfigurations: ObservablePromptConfigurations = ObservablePromptConfigurations()
+    private var prompts: [String: Prompt] {
+        var promptList: [String: Prompt] = [:]
+        for group in promptConfigurations.template.groups {
+            for prompt in group.prompts {
+                promptList[prompt.id] = prompt
+            }
+        }
+        return promptList
+    }
     
     @FocusState private var isPromptTemplateListFocused: Bool
     @Binding var shouldFocusPromptTemplateList: Bool
+    
+    private var promptGroups: [PromptGroup] {
+        return promptConfigurations.template.groups
+    }
     
     @Environment(\.managedObjectContext) private var viewContext
     var persistenceController = PersistenceController.shared
@@ -87,29 +106,17 @@ struct NavigationmanagerView: View {
         request.fetchLimit = 20
         _messages = FetchRequest(fetchRequest: request)
         _shouldFocusPromptTemplateList = shouldFocusPromptTemplateList
-        
-        for group in promptConfigurations.groups {
-            for prompt in group.prompts {
-                prompts[prompt.id] = prompt
-            }
-        }
     }
     
     var selectedPrompt: Prompt? {
         return prompts[selectedSideBarItem]
     }
     
-    func placeOrder() { }
-    func adjustOrder() { }
-    func rename() { }
-    func delay() { }
-    func cancelOrder() { }
-    
     var body: some View {
         NavigationSplitView(columnVisibility: $sideBarVisibility) {
             VStack {
                 List(selection: $selectedSideBarItem) {
-                    ForEach(promptConfigurations.groups, id: \.self) { group in
+                    ForEach(promptGroups, id: \.self) { group in
                         Section(header: Text("★ " + group.name).font(.title2)) {
                             ForEach(group.prompts) { prompt in
                                 NavigationLink(
@@ -148,6 +155,9 @@ struct NavigationmanagerView: View {
                             let supportDirectory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
                             let fileURL = supportDirectory!.appendingPathComponent("KittyGPT/prompts.json")
                             NSWorkspace.shared.activateFileViewerSelecting([fileURL])
+                        }
+                        Button("Reload templates") {
+                            promptConfigurations.loadPromptTemplate()
                         }
                         Button("Clear history") {
                             persistenceController.deleteAll()

@@ -37,6 +37,6 @@ struct PromptGroup: Hashable, Identifiable, Decodable {
     var prompts: [Prompt]
 }
 
-struct PromptConfigurations: Decodable {
+struct PromptTemplate: Decodable {
     var groups: [PromptGroup]
 }
