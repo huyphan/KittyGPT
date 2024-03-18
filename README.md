@@ -2,7 +2,7 @@
 
 ![Screenshot](screenshot.png)
 
-A simple macOS client for Claude models. Supported models include Claude (instant and v2) via AWS Bedrock.
+A simple macOS client for Claude models. Supported models include Claude (instant, v2, and v3) via AWS Bedrock.
 
 To use this application, you will need either:
 * AWS credentials of an IAM user or session that has `bedrock-runtime:InvokeModel` permission. See 
