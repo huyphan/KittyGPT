@@ -26,15 +26,21 @@ struct PreferencesView: View {
                 Text("Claude Instance v1 via AWS Bedrock")
                     .tag(Backend.bedrock_claude_instance_v1)
                 
-                Text("Claude v2 via AWS Bedrock")
+                Text("Claude 2 via AWS Bedrock")
                     .tag(Backend.bedrock_claude_v2)
+                
+                Text("Claude 3 Haiku via AWS Bedrock")
+                    .tag(Backend.bedrock_claude_v3_haiku)
+                
+                Text("Claude 3 Sonnet via AWS Bedrock")
+                    .tag(Backend.bedrock_claude_v3_sonnet)
             }
             .pickerStyle(.radioGroup)
             .padding(.bottom, 5)
 
             Divider().padding(.bottom, 5)
                 
-            if (backend == Backend.bedrock_claude_instance_v1 || backend == Backend.bedrock_claude_v2) {
+            if (backend == Backend.bedrock_claude_instance_v1 || backend == Backend.bedrock_claude_v2 || backend == Backend.bedrock_claude_v3_haiku || backend == Backend.bedrock_claude_v3_sonnet) {
                 Text("AWS credentials")
                     .padding(.top, 3)
                     .padding(.leading, 20)

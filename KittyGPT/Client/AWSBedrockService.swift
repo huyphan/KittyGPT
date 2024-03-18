@@ -6,13 +6,25 @@ import ClientRuntime
 import ClientRuntime
 import AWSClientRuntime
 
+struct RoleMessage: Encodable {
+    let role: String;
+    let content: String;
+}
+
 struct RequestMessageBody: Encodable {
-    let prompt: String
-    let max_tokens_to_sample: Int
+    let anthropic_version: String
+    let max_tokens: Int
+    let system: String
+    let messages: [RoleMessage]
+}
+
+struct ResponseContent: Decodable {
+    let type: String
+    let text: String
 }
 
 struct ResponseMessageBody: Decodable {
-    let completion: String;
+    let content: [ResponseContent]
 }
 
 enum InitializationError: Error {
@@ -59,18 +71,22 @@ class AWSBedrockService: AIService {
     }
     
     func sendChatCompletion(messages: [ConversationMessage]) -> AnyPublisher<ChatResponse, Error> {
-        var prompt = ""
+        var messagePrompts: [RoleMessage] = []
         for message in messages {
             if (message.role == Role.human) {
-                prompt.append("\n\nHuman: " + message.content)
+                messagePrompts.append(RoleMessage(role: "user", content: message.content))
             } else {
-                prompt.append("\n\nAssistant: " + message.content)
+                messagePrompts.append(RoleMessage(role: "assistant", content: message.content))
             }
         }
-        prompt.append("\n\nAssistant: Here is the answer:\n\n")
+        
+        
+        
         let body: RequestMessageBody = RequestMessageBody(
-            prompt: prompt,
-            max_tokens_to_sample: Configurations.maxReturnedToken
+            anthropic_version: "bedrock-2023-05-31",
+            max_tokens: Configurations.maxReturnedToken,
+            system: "",
+            messages: messagePrompts
         )
 
         let jsonEncoder = JSONEncoder()
@@ -83,7 +99,11 @@ class AWSBedrockService: AIService {
                 case Backend.bedrock_claude_instance_v1:
                     modelId = "anthropic.claude-instant-v1"
                 case Backend.bedrock_claude_v2:
-                    modelId = "anthropic.claude-v2"
+                    modelId = "anthropic.claude-v2:1"
+                case Backend.bedrock_claude_v3_sonnet:
+                    modelId = "anthropic.claude-3-sonnet-20240229-v1:0"
+                case Backend.bedrock_claude_v3_haiku:
+                    modelId = "anthropic.claude-3-haiku-20240307-v1:0"
                 default:
                     promise(.failure(RequestError.invalidModel))
                 }
@@ -98,7 +118,7 @@ class AWSBedrockService: AIService {
                     do {
                         let response = try await self.client.invokeModel(input: input)
                         let jsonDecoder = JSONDecoder()
-                        let textResponse = try jsonDecoder.decode(ResponseMessageBody.self, from: (response.body)!).completion
+                        let textResponse = try jsonDecoder.decode(ResponseMessageBody.self, from: (response.body)!).content[0].text
                         let milliseconds = Int(Date().timeIntervalSince1970 * 1000)
                         promise(.success(ChatResponse(id: "bedrock-\(milliseconds)", message: textResponse)))
                     } catch {

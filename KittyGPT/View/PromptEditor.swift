@@ -138,18 +138,22 @@ struct PromptEditor: View {
         
         var messages: [ConversationMessage] = []
         if (isIncludingContext) {
-            var lastMessages = persistenceController.lastConversations(messageCount: 2)
+            var lastMessages = persistenceController.lastConversations(messageCount: 6)
             // Older messages come first
             lastMessages.sort { $0.createdAt! < $1.createdAt! }
+            while (lastMessages.first?.sender != "me") {
+                lastMessages.removeFirst();
+            }
             lastMessages.forEach { lastMessage in
                 messages.append(ConversationMessage(
                     role: lastMessage.sender == "me" ? Role.human : Role.assistant,
                     content: lastMessage.content ?? ""
                 ))
             }
+        } else {
+            messages.append(message)
         }
-        messages.append(message)
-        
+
         isLoading = true
         let service: AIService
         do {

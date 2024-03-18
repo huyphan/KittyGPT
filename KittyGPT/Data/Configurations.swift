@@ -4,6 +4,8 @@ enum Backend: String {
     case openai = "openai"
     case bedrock_claude_instance_v1 = "bedrock-claude-instant-v1"
     case bedrock_claude_v2 = "bedrock-claude-v2"
+    case bedrock_claude_v3_haiku = "bedrock-claude-v3-haiku"
+    case bedrock_claude_v3_sonnet = "bedrock-claude-v3-sonnet"
 }
 
 enum AWSCredsMode: String {
