@@ -77,6 +77,17 @@ class Configurations {
           return UserDefaults.standard.string(forKey: "awsProfile") ?? "default"
       }
     }
-        
-    static let maxReturnedToken = 256
+
+    static var maxReturnedTokens: Int {
+      set {
+          UserDefaults.standard.set(newValue, forKey: "maxReturnedTokens")
+      }
+      get {
+          let currentMaxReturnedTokens = UserDefaults.standard.integer(forKey: "maxReturnedTokens")
+          if (currentMaxReturnedTokens <= 0) {
+              return 256
+          }
+          return currentMaxReturnedTokens
+      }
+    }
 }

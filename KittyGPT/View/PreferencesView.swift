@@ -15,6 +15,7 @@ struct PreferencesView: View {
     @State private var awsSecretKey: String = Configurations.awsSecretKey
     @State private var awsSessionToken: String = Configurations.awsSessionToken
     @State private var awsRegion: String = Configurations.awsRegion
+    @State private var maxReturnedTokens: Int = Configurations.maxReturnedTokens
     
     @Environment(\.dismiss) var dismiss
     
@@ -95,7 +96,17 @@ struct PreferencesView: View {
                 }
                 .padding(.leading, 20)
             }
-
+            
+            Divider().padding(.bottom, 5)
+            VStack {
+                HStack(alignment: .top) {
+                    Text("Max token").padding(.top, 3)
+                    TextField("", value: $maxReturnedTokens, format: .number)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                }
+            }
+            .padding(.leading, 20)
+            
             HStack() {
                 Spacer()
                 Button(action: {
@@ -123,6 +134,7 @@ struct PreferencesView: View {
         Configurations.awsSessionToken = awsSessionToken
         Configurations.awsRegion = awsRegion
         Configurations.awsProfile = awsProfile
+        Configurations.maxReturnedTokens = maxReturnedTokens
     }
 }
 

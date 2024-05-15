@@ -84,7 +84,7 @@ class AWSBedrockService: AIService {
         
         let body: RequestMessageBody = RequestMessageBody(
             anthropic_version: "bedrock-2023-05-31",
-            max_tokens: Configurations.maxReturnedToken,
+            max_tokens: Configurations.maxReturnedTokens,
             system: "",
             messages: messagePrompts
         )
