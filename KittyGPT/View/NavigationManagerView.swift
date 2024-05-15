@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import SettingsAccess
 
 enum SideBarItem: String, Identifiable, CaseIterable {
     var id: String { rawValue }
@@ -95,6 +96,8 @@ struct NavigationmanagerView: View {
     }
     
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.openSettings) private var openSettings
+    
     var persistenceController = PersistenceController.shared
     
     init(shouldFocusPromptTemplateList: Binding<Bool>) {
@@ -145,11 +148,7 @@ struct NavigationmanagerView: View {
                     Spacer()
                     Menu {
                         Button("Settings") {
-                            if #available(macOS 13, *) {
-                                NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-                            } else {
-                                NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
-                            }
+                            try? openSettings()
                         }
                         Button("Locate template file") {
                             let supportDirectory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first

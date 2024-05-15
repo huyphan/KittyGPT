@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Combine
-
+import SettingsAccess
 
 @main
 struct KittyGPTApp: App {
@@ -20,6 +20,7 @@ struct KittyGPTApp: App {
         WindowGroup {
             NavigationmanagerView(shouldFocusPromptTemplateList: $shouldFocusPromptTemplateList)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .openSettingsAccess()
         }
         .onChange(of: scenePhase) { _ in
             persistenceController.save()

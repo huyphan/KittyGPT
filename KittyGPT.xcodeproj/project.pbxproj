@@ -24,6 +24,7 @@
 		2A71ED942AD167CF002C92A4 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A71ED932AD167CF002C92A4 /* Configurations.swift */; };
 		2A727F522A5534810079915D /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2A727F512A5534810079915D /* MarkdownUI */; };
 		2A7983572AFF8AB40065A20B /* InternalNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7983562AFF8AB40065A20B /* InternalNotifications.swift */; };
+		2AA1930B2BB6A0CB00ED9630 /* SettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 2AA1930A2BB6A0CB00ED9630 /* SettingsAccess */; };
 		2AF2011D2A2F407000D6B88E /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF2011C2A2F407000D6B88E /* PreferencesView.swift */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +70,7 @@
 				2A6E2DC52A24A15600921DBB /* Alamofire in Frameworks */,
 				2A71ED922AD0D270002C92A4 /* AWSBedrockRuntime in Frameworks */,
 				2A6E2DC82A24A3B800921DBB /* AlertToast in Frameworks */,
+				2AA1930B2BB6A0CB00ED9630 /* SettingsAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +178,7 @@
 				2A6E2DC72A24A3B800921DBB /* AlertToast */,
 				2A727F512A5534810079915D /* MarkdownUI */,
 				2A71ED912AD0D270002C92A4 /* AWSBedrockRuntime */,
+				2AA1930A2BB6A0CB00ED9630 /* SettingsAccess */,
 			);
 			productName = KittyGPT;
 			productReference = 2A67026C2A14C10E00AE09DC /* KittyGPT.app */;
@@ -210,6 +213,7 @@
 				2A6E2DC62A24A3B800921DBB /* XCRemoteSwiftPackageReference "AlertToast" */,
 				2A727F502A5534810079915D /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				2A71ED902AD0D270002C92A4 /* XCRemoteSwiftPackageReference "aws-sdk-swift" */,
+				2AA193092BB6A0CB00ED9630 /* XCRemoteSwiftPackageReference "SettingsAccess" */,
 			);
 			productRefGroup = 2A67026D2A14C10E00AE09DC /* Products */;
 			projectDirPath = "";
@@ -488,6 +492,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		2AA193092BB6A0CB00ED9630 /* XCRemoteSwiftPackageReference "SettingsAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/orchetect/SettingsAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -510,6 +522,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2A727F502A5534810079915D /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
 			productName = MarkdownUI;
+		};
+		2AA1930A2BB6A0CB00ED9630 /* SettingsAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2AA193092BB6A0CB00ED9630 /* XCRemoteSwiftPackageReference "SettingsAccess" */;
+			productName = SettingsAccess;
 		};
 /* End XCSwiftPackageProductDependency section */
 
